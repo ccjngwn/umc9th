@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.users.entity;
 
 
+import com.example.umc9th.domain.users.entity.mapping.UserFood;
 import com.example.umc9th.domain.users.enums.FoodName;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
