@@ -2,7 +2,7 @@ package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.users.enums.Address;
+import com.example.umc9th.global.Address;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
