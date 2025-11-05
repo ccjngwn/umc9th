@@ -2,7 +2,7 @@ package com.example.umc9th.domain.users.entity;
 
 import com.example.umc9th.domain.mission.entity.mapping.UserMission;
 import com.example.umc9th.domain.users.entity.mapping.UserFood;
-import com.example.umc9th.domain.users.enums.Address;
+import com.example.umc9th.global.Address;
 import com.example.umc9th.domain.users.enums.Gender;
 import com.example.umc9th.domain.users.enums.SocialType;
 import com.example.umc9th.domain.users.enums.Status;

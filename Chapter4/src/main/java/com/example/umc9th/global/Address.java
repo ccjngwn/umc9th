@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.users.enums;
+package com.example.umc9th.global;
 
 import lombok.Getter;
 
