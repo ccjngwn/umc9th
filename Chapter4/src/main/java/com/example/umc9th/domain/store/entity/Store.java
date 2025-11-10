@@ -5,10 +5,7 @@ import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.global.Address;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @Table(name = "store")
 public class Store extends BaseEntity {
 
