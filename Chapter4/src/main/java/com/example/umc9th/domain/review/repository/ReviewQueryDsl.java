@@ -1,11 +1,11 @@
 package com.example.umc9th.domain.review.repository;
 
-import com.example.umc9th.domain.review.dto.response.ReviewResponse;
+import com.example.umc9th.domain.review.entity.Review;
 import com.querydsl.core.types.Predicate;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ReviewQueryDsl {
 
-    List<ReviewResponse> findByUserIdWithFilters(Predicate predicate);
+    Page<Review> findByUserIdWithFilters(Predicate predicate, Pageable pageable);
 }

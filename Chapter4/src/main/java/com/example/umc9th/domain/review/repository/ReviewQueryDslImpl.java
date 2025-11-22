@@ -1,14 +1,14 @@
 package com.example.umc9th.domain.review.repository;
 
-import com.example.umc9th.domain.review.dto.response.ReviewResponse;
 import com.example.umc9th.domain.review.entity.QReview;
 import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.users.entity.QUsers;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<ReviewResponse> findByUserIdWithFilters(Predicate predicate) {
+    public Page<Review> findByUserIdWithFilters(Predicate predicate, Pageable pageable) {
         QReview review = QReview.review;
 
         List<Review> reviewList = jpaQueryFactory
@@ -28,10 +28,16 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .leftJoin(review.user).fetchJoin()
                 .where(predicate)
                 .orderBy(review.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
-        return reviewList.stream()
-                .map(ReviewResponse::from)
-                .toList();
+        Long total = jpaQueryFactory
+                .select(review.count())
+                .from(review)
+                .where(predicate)
+                .fetchOne();
+
+        return new PageImpl<>(reviewList, pageable, total != null ? total : 0L);
     }
 }
