@@ -4,6 +4,8 @@ import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestControllerAdvice
 public class GeneralExceptionAdvice {
@@ -43,6 +46,27 @@ public class GeneralExceptionAdvice {
         ApiResponse<Map<String, String>> response = ApiResponse.onFailure(code, errors);
 
         // 에러 코드, 메시지와 함께 errors를 반환
+        return ResponseEntity.status(code.getStatus()).body(response);
+    }
+
+    // @RequestParam, @PathVariable 등에 대한 커스텀 유효성 검사 실패 처리
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<ApiResponse<Map<String, String>>> handleConstraintViolationException(
+            ConstraintViolationException ex
+    ) {
+        Map<String, String> errors = new HashMap<>();
+        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+
+        for (ConstraintViolation<?> violation : violations) {
+            // 파라미터 이름 추출 (예: getReviews.page -> page)
+            String propertyPath = violation.getPropertyPath().toString();
+            String fieldName = propertyPath.substring(propertyPath.lastIndexOf('.') + 1);
+            errors.put(fieldName, violation.getMessage());
+        }
+
+        GeneralErrorCode code = GeneralErrorCode.VALID_FAIL;
+        ApiResponse<Map<String, String>> response = ApiResponse.onFailure(code, errors);
+
         return ResponseEntity.status(code.getStatus()).body(response);
     }
 }

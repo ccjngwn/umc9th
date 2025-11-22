@@ -1,7 +1,15 @@
 package com.example.umc9th.domain.review.repository;
 
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.store.entity.Store;
+import com.example.umc9th.domain.users.entity.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryDsl {
+    Page<Review> findAllByStore(Store store, Pageable pageable);
+
+    Page<Review> findAllByUser(Users user, Pageable pageable);
 }
