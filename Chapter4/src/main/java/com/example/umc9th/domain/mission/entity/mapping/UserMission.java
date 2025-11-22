@@ -4,15 +4,13 @@ import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.users.entity.Users;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @Table(name = "user_mission")
 public class UserMission extends BaseEntity {
 
