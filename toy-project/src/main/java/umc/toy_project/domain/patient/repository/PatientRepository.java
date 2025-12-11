@@ -7,4 +7,6 @@ import umc.toy_project.domain.patient.entity.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     boolean existsByPhoneNumber(String phoneNumber);
+
+    boolean existsByPhoneNumberAndIdNot(String phoneNumber, Long id);
 }

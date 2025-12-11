@@ -13,6 +13,7 @@ import umc.toy_project.domain.patient.repository.PatientRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PatientCommandServiceImpl implements PatientCommandService {
 
 
@@ -35,5 +36,38 @@ public class PatientCommandServiceImpl implements PatientCommandService {
 
         // 응답 DTO 생성
         return PatientConverter.toJoinDTO(patient);
+    }
+
+    @Override
+    @Transactional
+    public PatientResDTO.JoinDTO update(Long id, PatientReqDTO.JoinDTO dto) {
+
+        // 환자 조회
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new PatientException(PatientErrorCode.NOT_FOUND));
+
+        // 전화번호 중복 체크
+        if (patientRepository.existsByPhoneNumberAndIdNot(dto.phoneNumber(), id)) {
+            throw new PatientException(PatientErrorCode.ALREADY_PHONE_NUM);
+        }
+
+        // 환자 정보 수정
+        patient.update(dto.name(), dto.age(), dto.gender(), dto.phoneNumber(), dto.address());
+
+        // 수정된 정보 반환
+        return PatientConverter.toJoinDTO(patient);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+
+        // 환자 존재 확인
+        if (!patientRepository.existsById(id)) {
+            throw new PatientException(PatientErrorCode.NOT_FOUND);
+        }
+
+        // 환자 삭제
+        patientRepository.deleteById(id);
     }
 }

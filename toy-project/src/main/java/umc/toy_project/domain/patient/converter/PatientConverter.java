@@ -25,4 +25,17 @@ public class PatientConverter {
                 .address(dto.address())
                 .build();
     }
+
+    // Entity -> PatientInfoDTO
+    public static PatientResDTO.PatientInfoDTO toPatientInfoDTO(Patient patient) {
+
+        return PatientResDTO.PatientInfoDTO.builder()
+                .id(patient.getId())
+                .name(patient.getName())
+                .age(patient.getAge())
+                .gender(patient.getGender())
+                .phoneNumber(patient.getPhoneNumber())
+                .address(patient.getAddress())
+                .build();
+    }
 }

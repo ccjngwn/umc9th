@@ -45,4 +45,12 @@ public class Patient extends BaseEntity {
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Builder.Default
     private List<MedicalRecord> medicalRecords = new ArrayList<>();
+
+    public void update(String name, Integer age, Gender gender, String phoneNumber, String address) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }
