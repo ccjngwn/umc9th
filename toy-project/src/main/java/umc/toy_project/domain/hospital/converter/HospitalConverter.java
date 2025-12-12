@@ -30,7 +30,7 @@ public class HospitalConverter {
                 .hospitals(result.getContent().stream()
                         .map(HospitalConverter::toHospitalInfoDTO)
                         .toList())
-                .listSize(result.getSize())
+                .listSize(result.getNumberOfElements())
                 .totalPage(result.getTotalPages())
                 .totalElements(result.getTotalElements())
                 .isFirst(result.isFirst())

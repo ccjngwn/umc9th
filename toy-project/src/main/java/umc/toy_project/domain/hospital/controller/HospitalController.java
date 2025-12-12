@@ -1,6 +1,7 @@
 package umc.toy_project.domain.hospital.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class HospitalController {
     @GetMapping("/search")
     public ApiResponse<HospitalResDTO.HospitalInfoListDTO> getHospitalsByAddress(
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam String address
+            @RequestParam @NotBlank String address
     ) {
         return ApiResponse.onSuccess(HospitalSuccessCode.SUCCESS_CODE, hospitalQueryService.getHospitalsByAddress(page, address));
     }
@@ -47,5 +48,13 @@ public class HospitalController {
             @RequestBody @Valid HospitalReqDTO.HospitalInfoDTO dto
     ) {
        return ApiResponse.onSuccess(HospitalSuccessCode.SUCCESS_CODE, hospitalCommandService.update(hospitalId, dto));
+    }
+
+    @DeleteMapping("/{hospitalId}")
+    public ApiResponse<Void> deleteHospital(
+            @PathVariable Long hospitalId
+    ) {
+        hospitalCommandService.delete(hospitalId);
+        return ApiResponse.onSuccess(HospitalSuccessCode.NO_CONTENT, null);
     }
 }

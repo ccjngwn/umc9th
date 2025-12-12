@@ -23,11 +23,6 @@ public class HospitalQueryServiceImpl implements HospitalQueryService{
     @Override
     public HospitalResDTO.HospitalInfoListDTO getHospitalsByAddress(Integer page, String address) {
 
-        // 빈 문자열 검증
-        if (address == null || address.trim().isEmpty()) {
-            throw new HospitalException(HospitalErrorCode.INVALID_ADDRESS);
-        }
-
         // 페이징 요청 객체 생성
         PageRequest pageRequest = PageRequest.of(page, PageConstant.DEFAULT_LIMIT.getLimit());
 

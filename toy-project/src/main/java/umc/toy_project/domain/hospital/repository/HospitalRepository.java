@@ -1,7 +1,5 @@
 package umc.toy_project.domain.hospital.repository;
 
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

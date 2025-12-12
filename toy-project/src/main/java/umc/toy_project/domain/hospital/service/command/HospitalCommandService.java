@@ -8,4 +8,6 @@ public interface HospitalCommandService {
     HospitalResDTO.HospitalInfoDTO create(HospitalReqDTO.HospitalInfoDTO dto);
 
     HospitalResDTO.HospitalInfoDTO update(Long id, HospitalReqDTO.HospitalInfoDTO dto);
+
+    void delete(Long id);
 }

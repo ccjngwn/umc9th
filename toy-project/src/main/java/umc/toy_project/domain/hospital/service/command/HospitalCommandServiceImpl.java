@@ -56,4 +56,16 @@ public class HospitalCommandServiceImpl implements HospitalCommandService{
         // 수정된 정보 반환
         return HospitalConverter.toHospitalInfoDTO(hospital);
     }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+
+        // 병원 조회
+        Hospital hospital = hospitalRepository.findById(id)
+                        .orElseThrow(() -> new HospitalException(HospitalErrorCode.NOT_FOUND));
+
+        // 병원 삭제
+        hospitalRepository.delete(hospital);
+    }
 }
