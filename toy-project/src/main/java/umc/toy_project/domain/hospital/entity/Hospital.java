@@ -29,4 +29,9 @@ public class Hospital extends BaseEntity {
     @OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Builder.Default
     private List<HospitalDepartment> departments = new ArrayList<>();
+
+    public void update(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }
