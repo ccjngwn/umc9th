@@ -4,6 +4,7 @@ import com.example.umc9th.domain.users.dto.req.UserReqDTO;
 import com.example.umc9th.domain.users.dto.res.UserResDTO;
 import com.example.umc9th.domain.users.exception.code.UserSuccessCode;
 import com.example.umc9th.domain.users.service.command.UserCommandService;
+import com.example.umc9th.domain.users.service.query.UserQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserCommandService userCommandService;
+    private final UserQueryService userQueryService;
 
     // 회원가입
     @PostMapping("/sign-up")
     public ApiResponse<UserResDTO.JoinDTO> signUp(@RequestBody @Valid UserReqDTO.JoinDTO dto) {
         return ApiResponse.onSuccess(UserSuccessCode.FOUND, userCommandService.signUp(dto));
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public ApiResponse<UserResDTO.LoginDTO> login(
+            @RequestBody @Valid UserReqDTO.LoginDTO dto
+    ) {
+        return ApiResponse.onSuccess(UserSuccessCode.FOUND, userQueryService.login(dto));
     }
 }
