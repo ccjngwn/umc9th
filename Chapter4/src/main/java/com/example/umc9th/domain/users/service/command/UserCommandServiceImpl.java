@@ -11,7 +11,9 @@ import com.example.umc9th.domain.users.exception.code.FoodErrorCode;
 import com.example.umc9th.domain.users.repository.FoodRepository;
 import com.example.umc9th.domain.users.repository.UserFoodRepository;
 import com.example.umc9th.domain.users.repository.UsersRepository;
+import com.example.umc9th.global.auth.enums.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +27,18 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final UsersRepository userRepository;
     private final UserFoodRepository userFoodRepository;
     private final FoodRepository foodRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원가입
     @Override
     @Transactional
     public UserResDTO.JoinDTO signUp(UserReqDTO.JoinDTO dto) {
-        // 사용자 생성
-        Users user = UserConverter.toUser(dto);
+
+        // 솔트된 비밀번호 생성
+        String salt = passwordEncoder.encode(dto.password());
+
+        // 사용자 생성 : 유저 / 관리자는 따로 API 만들어서 관리
+        Users user = UserConverter.toUser(dto, salt, Role.ROLE_USER);
 
         // DB 적용
         userRepository.save(user);

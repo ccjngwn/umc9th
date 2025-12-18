@@ -6,6 +6,7 @@ import com.example.umc9th.global.Address;
 import com.example.umc9th.domain.users.enums.Gender;
 import com.example.umc9th.domain.users.enums.SocialType;
 import com.example.umc9th.domain.users.enums.Status;
+import com.example.umc9th.global.auth.enums.Role;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,11 +38,18 @@ public class Users extends BaseEntity {
     @Column(name = "birth", nullable = false)
     private LocalDate birth;
 
-    @Column(name = "nickname", length = 10, nullable = false)
+    @Column(name = "nickname", length = 10)
     private String nickname;
 
-    @Column(name = "email", length = 30, nullable = false)
+    @Column(name = "email", length = 30, nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "phone_num", length = 13, nullable = false)
     private String phoneNum;
@@ -54,10 +62,10 @@ public class Users extends BaseEntity {
     @Column(name = "inactive_date")
     private LocalDateTime inactiveDate;
 
-    @Column(name = "social_id", nullable = false)
+    @Column(name = "social_id")
     private String socialId;
 
-    @Column(name = "social_type", nullable = false)
+    @Column(name = "social_type")
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
